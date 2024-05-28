@@ -8,7 +8,8 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User) private usersRepository: Repository<User>) { }
+    @InjectRepository(User) private usersRepository: Repository<User>,
+  ) {}
 
   createUser(createUserDto: CreateUserDto) {
     try {
@@ -22,8 +23,7 @@ export class UsersService {
 
   findAllUsers() {
     try {
-      return this.usersRepository.find({
-      });
+      return this.usersRepository.find({});
     } catch (error) {
       console.error('Error getting all Users', error);
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -33,11 +33,10 @@ export class UsersService {
   async findOneUserByEmail(correo: string) {
     try {
       const userFound = await this.usersRepository.findOne({
-        where: { correo }
+        where: { correo },
       });
-      console.log(userFound, "findOneUserByEmail");
+      console.log(userFound, 'findOneUserByEmail');
       return userFound;
- 
     } catch (error) {
       throw error;
     }
@@ -60,7 +59,7 @@ export class UsersService {
   async updateUser(id: number, updateUserDto: UpdateUserDto) {
     try {
       const userFound = await this.findOneUserById(id);
-      const updateUser = Object.assign(userFound, updateUserDto)
+      const updateUser = Object.assign(userFound, updateUserDto);
       return this.usersRepository.save(updateUser);
     } catch (error) {
       console.error('Error update User', error);
@@ -72,7 +71,7 @@ export class UsersService {
     try {
       const result = await this.usersRepository.delete({ id });
       if (result.affected === 0) {
-        return new HttpException('User Not Found', HttpStatus.NOT_FOUND)
+        return new HttpException('User Not Found', HttpStatus.NOT_FOUND);
       }
       return result;
     } catch (error) {

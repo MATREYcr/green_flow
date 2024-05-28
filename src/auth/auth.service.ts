@@ -4,15 +4,18 @@ import { UsersService } from 'src/users/users.service';
 import { RegisterUserDto } from './dto/register-user.dto';
 @Injectable()
 export class AuthService {
-  constructor(
-    private readonly usersService: UsersService,
-  ) { }
+  constructor(private readonly usersService: UsersService) {}
 
   async registerUser(registerUserDto: RegisterUserDto) {
     try {
-      const userFound = await this.usersService.findOneUserByEmail(registerUserDto.correo);
+      const userFound = await this.usersService.findOneUserByEmail(
+        registerUserDto.correo,
+      );
       if (userFound) {
-        throw new HttpException('User alredy Exist', HttpStatus.INTERNAL_SERVER_ERROR);
+        throw new HttpException(
+          'User alredy Exist',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
       }
       return await this.usersService.createUser(registerUserDto);
     } catch (error) {
@@ -26,10 +29,16 @@ export class AuthService {
       const userFound = await this.usersService.findOneUserByEmail(correo);
       console.log(userFound, 'userFound');
       if (!userFound) {
-        throw new HttpException('Correo is wrong', HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+        throw new HttpException(
+          'Correo is wrong',
+          HttpStatus.NON_AUTHORITATIVE_INFORMATION,
+        );
       }
-      if (contraseña === userFound.contraseña) {
-        throw new HttpException('Contraseña is wrong', HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+      if (contraseña !== userFound.contraseña) {
+        throw new HttpException(
+          'Contraseña is wrong',
+          HttpStatus.NON_AUTHORITATIVE_INFORMATION,
+        );
       }
       return userFound;
     } catch (error) {

@@ -1,8 +1,8 @@
 import { IsEmail, IsNotEmpty, IsEnum } from 'class-validator';
 enum UserType {
-    NORMAL = 'normal',
-    CORPORATE = 'corporativo',
-  }
+  NORMAL = 'normal',
+  CORPORATE = 'corporativo',
+}
 export class RegisterUserDto {
   @IsNotEmpty()
   nombre: string;

@@ -36,6 +36,6 @@ export class User {
   @IsEnum(UserType)
   tipoUsuario: UserType;
 
-  @OneToMany(() => Product, product => product.vendedor, {eager: true})
+  @OneToMany(() => Product, (product) => product.vendedor, { eager: true })
   productos: Product[];
 }

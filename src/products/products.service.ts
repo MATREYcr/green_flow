@@ -12,15 +12,17 @@ export class ProductsService {
     @InjectRepository(Product)
     private productsRepository: Repository<Product>,
     private readonly usersService: UsersService,
-  ) { }
+  ) {}
 
   async createProduct(createProductDto: CreateProductDto) {
     try {
-      const findUser = await this.usersService.findOneUserById(createProductDto.idVendedor);
+      const findUser = await this.usersService.findOneUserById(
+        createProductDto.idVendedor,
+      );
       delete createProductDto.idVendedor;
       const newProduct = this.productsRepository.create({
         ...createProductDto,
-        vendedor: findUser
+        vendedor: findUser,
       });
       return await this.productsRepository.save(newProduct);
     } catch (error) {
@@ -32,7 +34,7 @@ export class ProductsService {
   async findAllProducts() {
     try {
       return await this.productsRepository.find({
-        relations: ['vendedor']
+        relations: ['vendedor'],
       });
     } catch (error) {
       console.error('Error getting all Products', error);
@@ -44,9 +46,8 @@ export class ProductsService {
     try {
       const productFound = await this.productsRepository.findOne({
         where: { id },
-        relations: ['vendedor']
-      }
-      );
+        relations: ['vendedor'],
+      });
       if (!productFound) {
         throw new HttpException('Product not found', HttpStatus.NOT_FOUND);
       }

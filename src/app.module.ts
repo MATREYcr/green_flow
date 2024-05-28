@@ -8,7 +8,8 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({ //Conexion a bd
+    TypeOrmModule.forRoot({
+      //Conexion a bd
       type: 'mysql',
       host: 'localhost',
       port: 3307,
@@ -16,12 +17,13 @@ import { AuthModule } from './auth/auth.module';
       password: '1234',
       database: 'recyklon',
       entities: [__dirname + '/**/*.entity{.ts,.js}'], //Cualquier archivo que termine en .entity es cargado por el typeOrm
-      synchronize: true //para q se active la creacion de las tablas 
+      synchronize: true, //para q se active la creacion de las tablas
     }),
     UsersModule,
     ProductsModule,
-    AuthModule],
+    AuthModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

@@ -7,12 +7,8 @@ import { User } from 'src/users/entities/user.entity';
 import { UsersService } from '../users/users.service';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Product, User])],
+  imports: [TypeOrmModule.forFeature([Product, User])],
   controllers: [ProductsController],
-  providers: [
-    ProductsService,
-    UsersService
-  ],
+  providers: [ProductsService, UsersService],
 })
-export class ProductsModule { }
+export class ProductsModule {}
