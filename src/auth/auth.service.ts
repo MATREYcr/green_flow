@@ -1,12 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UsersService } from 'src/users/users.service';
-import { RegisterUserDto } from './dto/register-user.dto';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
 @Injectable()
 export class AuthService {
   constructor(private readonly usersService: UsersService) {}
 
-  async registerUser(registerUserDto: RegisterUserDto) {
+  async registerUser(registerUserDto: CreateUserDto) {
     try {
       const userFound = await this.usersService.findOneUserByEmail(
         registerUserDto.correo,
@@ -25,7 +25,6 @@ export class AuthService {
 
   async loginUser({ correo, contraseña }: LoginUserDto) {
     try {
-      console.log(correo, contraseña, 'paraaams');
       const userFound = await this.usersService.findOneUserByEmail(correo);
       console.log(userFound, 'userFound');
       if (!userFound) {
