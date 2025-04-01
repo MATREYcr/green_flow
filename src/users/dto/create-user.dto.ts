@@ -42,11 +42,4 @@ export class CreateUserDto {
   @IsNotEmpty()
   contacto: string;
 
-  @ApiProperty({
-    description: 'El tipo de usuario (normal o corporativo)',
-    enum: UserType,
-    example: UserType.NORMAL,
-  })
-  @IsEnum(UserType)
-  tipoUsuario: UserType;
 }
